@@ -1,0 +1,154 @@
+{
+  "trained_at": "2026-10-24T13:05:34+00:00",
+  "dataset": {
+    "customers": 7043,
+    "churn_rate": 0.2653698707936959,
+    "train_size": 5634,
+    "test_size": 1409
+  },
+  "selected_model": "xgboost",
+  "decision_threshold": 0.17,
+  "xgboost_params": {
+    "n_estimators": 200,
+    "learning_rate": 0.1670006449496796,
+    "max_depth": 2,
+    "min_child_weight": 15.658258014430572,
+    "subsample": 0.7403267452156709,
+    "colsample_bytree": 0.7758510357239139,
+    "reg_lambda": 14.333003611873949,
+    "gamma": 4.005642611617772
+  },
+  "cv_metrics": {
+    "logistic_regression": {
+      "mean": {
+        "roc_auc": 0.8475109469943554,
+        "pr_auc": 0.6614961789802518,
+        "log_loss": 0.41429377423842817,
+        "brier": 0.13432573543857185
+      },
+      "std": {
+        "roc_auc": 0.012487013253281665,
+        "pr_auc": 0.016932323342265864,
+        "log_loss": 0.011723782276088102,
+        "brier": 0.005055758554642878
+      }
+    },
+    "random_forest": {
+      "mean": {
+        "roc_auc": 0.8436046325687752,
+        "pr_auc": 0.656623759973285,
+        "log_loss": 0.41913078746985155,
+        "brier": 0.1359972506522183
+      },
+      "std": {
+        "roc_auc": 0.008878787888895118,
+        "pr_auc": 0.025137195113213287,
+        "log_loss": 0.008219681436162755,
+        "brier": 0.004304247901576876
+      }
+    },
+    "xgboost": {
+      "mean": {
+        "roc_auc": 0.8501679557326292,
+        "pr_auc": 0.6727254097686599,
+        "log_loss": 0.4109566152095795,
+        "brier": 0.13328790664672852
+      },
+      "std": {
+        "roc_auc": 0.013563315589732783,
+        "pr_auc": 0.021510373044889623,
+        "log_loss": 0.0145355880050008,
+        "brier": 0.005899938004062868
+      }
+    }
+  },
+  "test_metrics": {
+    "logistic_regression": {
+      "roc_auc": 0.8454984628897673,
+      "pr_auc": 0.6531799981711629,
+      "log_loss": 0.41563812238800457,
+      "brier": 0.13622333705225806
+    },
+    "random_forest": {
+      "roc_auc": 0.8418739827946989,
+      "pr_auc": 0.6478640859955366,
+      "log_loss": 0.41972487270513803,
+      "brier": 0.13663423898792648
+    },
+    "xgboost": {
+      "roc_auc": 0.8481128419747346,
+      "pr_auc": 0.6644012009783562,
+      "log_loss": 0.4135342240333557,
+      "brier": 0.1344064474105835
+    }
+  },
+  "test_metrics_selected_model": {
+    "roc_auc": 0.8481128419747346,
+    "pr_auc": 0.6644012009783562,
+    "log_loss": 0.4135342240333557,
+    "brier": 0.1344064474105835,
+    "threshold": 0.17,
+    "accuracy": 0.6962384669978708,
+    "precision": 0.46131805157593125,
+    "recall": 0.8609625668449198,
+    "f1": 0.6007462686567164
+  },
+  "campaign_policies": {
+    "No campaign": {
+      "contacted": 0,
+      "churners_reached": 0,
+      "churners_reached_pct": 0.0,
+      "profit": 0.0
+    },
+    "Contact everyone": {
+      "contacted": 1409,
+      "churners_reached": 374,
+      "churners_reached_pct": 1.0,
+      "profit": 43852.57999999999
+    },
+    "Model, default 0.5 threshold": {
+      "contacted": 297,
+      "churners_reached": 200,
+      "churners_reached_pct": 0.5347593582887701,
+      "profit": 49963.35
+    },
+    "Model, profit-optimal threshold (0.17)": {
+      "contacted": 698,
+      "churners_reached": 322,
+      "churners_reached_pct": 0.8609625668449198,
+      "profit": 65655.34999999999
+    },
+    "Model, expected-value targeting": {
+      "contacted": 648,
+      "churners_reached": 307,
+      "churners_reached_pct": 0.820855614973262,
+      "profit": 68115.45
+    }
+  },
+  "global_feature_importance": {
+    "Contract": 0.6520758187291769,
+    "tenure": 0.45626735935895907,
+    "OnlineSecurity": 0.2385202016178052,
+    "InternetService": 0.20001329170069404,
+    "MonthlyCharges": 0.17800935723411002,
+    "TechSupport": 0.16006390366260448,
+    "PaperlessBilling": 0.1447677181480553,
+    "avg_monthly_spend": 0.1407569803589938,
+    "PaymentMethod": 0.138721518474396,
+    "TotalCharges": 0.12917213652839446,
+    "MultipleLines": 0.10421876917616324,
+    "OnlineBackup": 0.08874794934167053,
+    "charge_increase": 0.07864883367633187,
+    "StreamingTV": 0.06682231373297004,
+    "StreamingMovies": 0.06449491872439644,
+    "Dependents": 0.051902391609357,
+    "SeniorCitizen": 0.04806787268465504,
+    "PhoneService": 0.021653173757681426,
+    "num_services": 0.020262396343586266,
+    "is_new_customer": 0.015511014105116303,
+    "DeviceProtection": 0.0,
+    "Partner": 0.0,
+    "gender": 0.0,
+    "auto_payment": 0.0
+  }
+}

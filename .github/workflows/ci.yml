@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install
+        run: pip install -e ".[dev]"
+      - name: Lint
+        run: |
+          ruff check src tests
+          ruff format --check src tests
+      - name: Unit and API tests
+        run: pytest
+
+  docker:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Train a model on the real dataset
+        run: |
+          pip install -e .
+          python -m churn.train --trials 5
+      - name: Build image
+        run: docker build -t churn-api .
+      - name: Smoke-test the container
+        run: |
+          docker run -d -p 8000:8000 --name api churn-api
+          for i in $(seq 1 30); do curl -fs localhost:8000/health && break; sleep 2; done
+          curl -fs -X POST localhost:8000/predict -H 'Content-Type: application/json' -d '{
+            "gender": "Female", "SeniorCitizen": 0, "Partner": "Yes", "Dependents": "No",
+            "tenure": 3, "PhoneService": "Yes", "MultipleLines": "No",
+            "InternetService": "Fiber optic", "OnlineSecurity": "No", "OnlineBackup": "No",
+            "DeviceProtection": "No", "TechSupport": "No", "StreamingTV": "Yes",
+            "StreamingMovies": "Yes", "Contract": "Month-to-month", "PaperlessBilling": "Yes",
+            "PaymentMethod": "Electronic check", "MonthlyCharges": 99.65, "TotalCharges": 298.95
+          }' | tee response.json
+          python -c "import json; assert 0 <= json.load(open('response.json'))['churn_probability'] <= 1"
